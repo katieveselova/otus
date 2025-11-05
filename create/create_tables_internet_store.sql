@@ -93,3 +93,19 @@ CREATE TABLE warehouses (
   CHECK (btrim(code) <> ''),
   CHECK (btrim(name) <> '')
 );
+
+CREATE TABLE inventory (
+  warehouse_id BIGINT NOT NULL,
+  variant_id   BIGINT NOT NULL,
+  qty          INTEGER NOT NULL DEFAULT 0,
+  reserved_qty INTEGER NOT NULL DEFAULT 0,
+  updated_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT inventory_pk PRIMARY KEY (warehouse_id, variant_id),
+  CONSTRAINT inventory_wh_fk FOREIGN KEY (warehouse_id)
+    REFERENCES warehouses(warehouse_id) ON DELETE CASCADE,
+  CONSTRAINT inventory_var_fk FOREIGN KEY (variant_id)
+    REFERENCES product_variants(variant_id) ON DELETE CASCADE,
+  CONSTRAINT qty_nonneg CHECK (qty >= 0),
+  CONSTRAINT reserved_nonneg CHECK (reserved_qty >= 0),
+  CONSTRAINT reserved_lte_qty CHECK (reserved_qty <= qty)
+);
