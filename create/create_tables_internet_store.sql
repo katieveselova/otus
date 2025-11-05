@@ -48,3 +48,22 @@ create unique index if not exists ux_categories_slug on public.categories (slug)
 create unique index if not exists ux_categories_name on public.categories (name);
 
 
+create table if not exists products (
+  product_id  bigint generated always as identity primary key,
+  name        text not null,
+  slug        text not null,
+  brand       text not null,
+  description text,
+  attributes  jsonb not null default '{}'::jsonb,
+  is_active   boolean not null default true,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now(),
+  constraint chk_products_slug_format check (slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$'),
+  constraint chk_products_name_not_blank check (btrim(name) <> ''),
+  constraint chk_products_brand_not_blank check (btrim(brand) <> '')
+);
+
+-- Индексы
+create unique index if not exists ux_products_slug on public.products (slug);
+create index if not exists ix_products_brand on public.products (brand);
+
