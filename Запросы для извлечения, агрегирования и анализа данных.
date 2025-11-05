@@ -1,0 +1,100 @@
+1 считает число заказов, число уникальных покупателей, общий объем продаж, средний чек
+
+WITH paid_orders AS (
+  SELECT o.order_id,
+         o.customer_id,
+         o.placed_at::date AS placed_date
+  FROM orders o
+  WHERE EXISTS (
+    SELECT 1
+    FROM payments p
+    WHERE p.order_id = o.order_id
+      AND p.status = 'captured'
+  )
+),
+order_revenue AS (
+  SELECT oi.order_id,
+         SUM(oi.total)::bigint AS items_total
+  FROM order_items oi
+  GROUP BY oi.order_id
+),
+monthly AS (
+  SELECT date_trunc('month', po.placed_date)::date AS month,
+         COUNT(DISTINCT po.order_id) AS orders_cnt,
+         COUNT(DISTINCT po.customer_id) AS customers_cnt,
+         SUM(orv.items_total)::bigint AS gmv  FROM paid_orders po
+  JOIN order_revenue orv ON orv.order_id = po.order_id
+  GROUP BY 1
+)
+SELECT month,
+       orders_cnt,
+       customers_cnt,
+       gmv,
+       (gmv::numeric / NULLIF(orders_cnt, 0))::numeric(18,2) AS aov,
+       ROUND(AVG(gmv) OVER (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW))::bigint AS gmv_ma3
+FROM monthly
+ORDER BY month;
+
+2 Выручка и заказы по брендам. Какие бренды генерируют больше выручки
+
+SELECT
+  p.brand,
+  COUNT(DISTINCT o.order_id) AS orders_cnt,
+  SUM(oi.total) / 100.0 AS revenue
+FROM Order_items oi
+JOIN Orders o ON o.order_id = oi.order_id
+JOIN Products p ON p.product_id = oi.product_id
+GROUP BY p.brand
+ORDER BY revenue DESC NULLS LAST;
+
+
+3 Остатки по складам: всего, резерв, доступно, количество уникальных продуктов на складе
+
+SELECT
+  w.warehouse_id,
+  w.name AS warehouse_name,
+  SUM(i.qty) AS qty_total,
+  SUM(i.reserved_qty) AS qty_reserved,
+  SUM(i.qty - i.reserved_qty) AS qty_available,
+  COUNT(DISTINCT i.variant_id) AS variants_cnt
+FROM Inventory i
+JOIN Warehouses w ON w.warehouse_id = i.warehouse_id
+GROUP BY w.warehouse_id, w.name
+ORDER BY qty_available DESC;
+
+4 Топ продаваемых товаров за 30 дней (по количеству и выручке).   Что продаётся лучше всего сейчас.
+SELECT
+  oi.product_id,
+  MAX(oi.product_name) AS product_name,        
+  SUM(oi.quantity) AS qty_sold,
+  SUM(oi.total) / 100.0 AS gross_revenue
+FROM order_items oi
+JOIN Orders o ON o.order_id = oi.order_id
+WHERE o.placed_at >= NOW() - INTERVAL '30 days'
+GROUP BY oi.product_id
+ORDER BY qty_sold DESC
+LIMIT 20;
+
+
+5 доля повторных клиентов 
+
+WITH per_customer AS (
+  SELECT customer_id, COUNT(*) AS orders_cnt
+  FROM Orders
+  GROUP BY customer_id
+)
+SELECT
+  SUM(CASE WHEN orders_cnt >= 2 THEN 1 ELSE 0 END)::numeric / COUNT(*) AS repeat_customers_share,
+  SUM(CASE WHEN orders_cnt >= 2 THEN 1 ELSE 0 END) AS repeat_customers,
+  COUNT(*) AS customers_with_orders
+FROM per_customer;
+
+
+
+
+
+
+
+
+
+
