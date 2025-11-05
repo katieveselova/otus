@@ -67,3 +67,35 @@ select
   customer_id, is_default, receiver_name, country_code, city, addressline, created_at
 from src;
 
+insert into public.categories (name, slug, is_active, created_at, updated_at) values
+('Электроника',           'elektronika',            true,  now() - interval '29 days', now() - interval '29 days'),
+('Ноутбуки',              'noutbuki',               true,  now() - interval '28 days', now() - interval '28 days'),
+('Смартфоны',             'smartfony',              true,  now() - interval '27 days', now() - interval '27 days'),
+('Планшеты',              'planshety',              true,  now() - interval '26 days', now() - interval '26 days'),
+('Аудиотехника',          'audiotehnika',           false, now() - interval '25 days', now() - interval '25 days'),
+('Телевизоры',            'televizory',             true,  now() - interval '24 days', now() - interval '24 days'),
+('Фото и видео',          'foto-i-video',           true,  now() - interval '23 days', now() - interval '23 days'),
+('Игровые приставки',     'igrovye-pristavki',      true,  now() - interval '22 days', now() - interval '22 days'),
+('Компьютеры',            'kompyutery',             true,  now() - interval '21 days', now() - interval '21 days'),
+('Периферия',             'periferiya',             false, now() - interval '20 days', now() - interval '20 days'),
+('Умный дом',             'umnyj-dom',              true,  now() - interval '19 days', now() - interval '19 days'),
+('Бытовая техника',       'bytovaya-tehnika',       true,  now() - interval '18 days', now() - interval '18 days'),
+('Кухонная техника',      'kuhonnaya-tehnika',      true,  now() - interval '17 days', now() - interval '17 days'),
+('Красота и здоровье',    'krasota-i-zdorove',      true,  now() - interval '16 days', now() - interval '16 days'),
+('Спорт и отдых',         'sport-i-otdyh',          false, now() - interval '15 days', now() - interval '15 days'),
+('Детские товары',        'detskie-tovary',         true,  now() - interval '14 days', now() - interval '14 days'),
+('Автотовары',            'avtotovary',             true,  now() - interval '13 days', now() - interval '13 days'),
+('Зоотовары',             'zootovary',              true,  now() - interval '12 days', now() - interval '12 days'),
+('Канцтовары',            'kanctovary',             true,  now() - interval '11 days', now() - interval '11 days'),
+('Книги',                 'knigi',                  false, now() - interval '10 days', now() - interval '10 days'),
+('Музыка',                'muzyka',                 true,  now() - interval '9 days',  now() - interval '9 days'),
+('Фильмы',                'filmy',                  true,  now() - interval '8 days',  now() - interval '8 days'),
+('ПО',                    'po',                     true,  now() - interval '7 days',  now() - interval '7 days'),
+('Игры ПК',               'igry-pk',                true,  now() - interval '6 days',  now() - interval '6 days'),
+('Одежда',                'odezhda',                false, now() - interval '5 days',  now() - interval '5 days'),
+('Обувь',                 'obuv',                   true,  now() - interval '4 days',  now() - interval '4 days'),
+('Аксессуары',            'aksessuary',             true,  now() - interval '3 days',  now() - interval '3 days'),
+('Часы',                  'chasy',                  true,  now() - interval '2 days',  now() - interval '2 days'),
+('Ювелирные изделия',     'yuvelirnye-izdeliya',    true,  now() - interval '1 days',  now() - interval '1 days'),
+('Подарки',               'podarki',                false, now(),                       now());
+
