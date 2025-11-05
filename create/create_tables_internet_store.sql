@@ -32,3 +32,19 @@ create unique index if not exists uq_customer_default_address
   on public.customer_addresses(customer_id)
   where is_default;
 
+
+create table if not exists public.categories (
+  category_id bigint generated always as identity primary key,
+  name        text not null,
+  slug        text not null,
+  is_active   boolean not null default true,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now(),
+  constraint chk_categories_slug_format check (slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$')
+);
+
+-- Уникальные индексы
+create unique index if not exists ux_categories_slug on public.categories (slug);
+create unique index if not exists ux_categories_name on public.categories (name);
+
+
