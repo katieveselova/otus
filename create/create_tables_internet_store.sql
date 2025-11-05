@@ -63,7 +63,13 @@ create table if not exists products (
   constraint chk_products_brand_not_blank check (btrim(brand) <> '')
 );
 
--- Индексы
-create unique index if not exists ux_products_slug on public.products (slug);
-create index if not exists ix_products_brand on public.products (brand);
+
+CREATE TABLE IF NOT EXISTS product_categories (
+  product_id  BIGINT NOT NULL REFERENCES products(product_id) ON DELETE CASCADE,
+  category_id BIGINT NOT NULL REFERENCES categories(category_id) ON DELETE CASCADE,
+  PRIMARY KEY (product_id, category_id)
+);
+
+-- Индекс на category_id (ускорит выборки по категории)
+CREATE INDEX IF NOT EXISTS idx_prod
 
