@@ -1,0 +1,32 @@
+Количество заказов на клиента, сумма позиций заказов), дата последнего заказа, город из адреса по умолчанию.
+
+create or replace view analytics.v_customer_ltv as
+with order_totals as (
+  select
+    o.order_id,
+    o.customer_id,
+    o.currency,
+    o.placed_at,
+    sum(oi.total) as revenue_cents
+  from orders o
+  join order_items oi on oi.order_id = o.order_id
+  group by o.order_id, o.customer_id, o.currency, o.placed_at
+)
+select
+  c.customer_id,
+  c.email,
+  c.first_name,
+  c.last_name,
+  ca.city as default_city,
+  ot.currency,
+  count(distinct ot.order_id) as orders_count,
+  coalesce(sum(ot.revenue), 0) as ltv,
+  max(ot.placed_at) as last_order_at
+from customers c
+join order_totals ot on ot.customer_id = c.customer_id
+left join customer_addresses ca
+  on ca.customer_id = c.customer_id and ca.is_default
+group by
+  c.customer_id, c.email, c.first_name, c.last_name, ca.city, ot.currency;
+
+
