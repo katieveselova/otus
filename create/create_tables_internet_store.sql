@@ -11,7 +11,7 @@ create table customers (
   -- status: 1 = активен, 0 = неактивен, 2 = заблокирован
 );
 
-create table if not exists customer_addresses (
+create table customer_addresses (
   address_id     bigint generated always as identity primary key,
   customer_id    bigint not null,
   is_default     boolean not null default false,
