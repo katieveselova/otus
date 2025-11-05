@@ -25,3 +25,10 @@ create table customer_addresses (
   constraint chk_country_code_iso2_upper check (country_code ~ '^[A-Z]{2}$')
 );
 
+-- Индексы и ограничение: по одному дефолтному адресу на клиента
+create index if not exists ix_customer_addresses_customer_id on public.customer_addresses(customer_id);
+
+create unique index if not exists uq_customer_default_address
+  on public.customer_addresses(customer_id)
+  where is_default;
+
