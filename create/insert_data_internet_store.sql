@@ -162,4 +162,7 @@ insert into public.products (name, slug, brand, description, attributes, is_acti
 ('Саундбар Aurelia Beam 2.1', 'saundbar-aurelia-beam-2-1', 'Aurelia', 'Мощный звук с сабвуфером.', '{"category":"audio","sku":"AUR-BEAM-21","channels":"2.1","hdmi_arc":true,"bluetooth":true,"subwoofer":"wireless"}'::jsonb, true),
 ('Кофеварка Zen Brew One', 'kofevarka-zen-brew-one', 'Zen', 'Рожковая кофеварка для дома.', '{"category":"kitchen","sku":"ZEN-BREW-ONE","pump_bar":15,"milk_frother":true,"watertank_l":1.2}'::jsonb, false);
 
+INSERT INTO product_categories (product_id, category_id) VALUES
+(1,  3), (2,  3),  (3,  5), (4,  28), (5,  2),  (6,  2),  (7,  10),   (8,  10),   (9,  10),   (10, 10), (11, 5),    (12, 5),   (13, 27),   (14, 27),  (15, 9),    (16, 9),    (17, 9),    (18, 6),   (19, 7),   (20, 7),    (21, 15),  (22, 12),   (23, 13),   (24, 13),   (25, 13),   (26, 12),   (27, 12),   (28, 11),   (29, 12),  (30, 26),  (31, 27),   (32, 15),  (33, 19),   (34, 19),   (35, 13),  (36, 13),   (37, 13),   (38, 14),   (39, 14),   (40, 14),  (41, 14),  (42, 12),   (43, 12),   (44, 12),   (45, 12),   (46, 12),  (47, 9),    (48, 10),   (49, 10),   (50, 8),  (51, 20),   (52, 4),   (53, 5), (54, 27),  (55, 9),  (56, 10),  (57, 10),  (58, 5),  (59, 13);  
+
 
