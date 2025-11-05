@@ -71,5 +71,15 @@ CREATE TABLE IF NOT EXISTS product_categories (
 );
 
 -- Индекс на category_id (ускорит выборки по категории)
-CREATE INDEX IF NOT EXISTS idx_prod
+CREATE INDEX IF NOT EXISTS idx_prod;
+
+  CREATE TABLE IF NOT EXISTS product_variants (
+  variant_id    BIGSERIAL PRIMARY KEY,
+  product_id    BIGINT NOT NULL REFERENCES products(product_id) ON DELETE CASCADE,
+  price         NUMERIC,
+  cost          NUMERIC,
+  weight_grams  INTEGER,
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
 
