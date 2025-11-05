@@ -31,3 +31,39 @@ values
   ('tatiana.romanova@example.ru',    '+7 905 888-77-66', 'Татьяна',   'Романова',   'Петровна',      now() - interval '90 days',  true,  1),
   ('boris.egorov@example.ru',        '+7 903 999-88-77', 'Борис',     'Егоров',     'Фёдорович',     now() - interval '80 days',  false, 0),
   ('ksenia.zaitseva@example.ru',     '+7 916 222-55-44', 'Ксения',    'Зайцева',    'Алексеевна',    now() - interval '70 days',  true,  1);
+
+with src as (
+  select
+    c.customer_id,
+    format('Получатель %s', row_number() over (order by c.customer_id)) as receiver_name,
+    case (row_number() over (order by c.customer_id)) % 6
+      when 0 then 'RU'
+      when 1 then 'US'
+      when 2 then 'DE'
+      when 3 then 'FR'
+      when 4 then 'GB'
+      else 'ES'
+    end as country_code,
+    case (row_number() over (order by c.customer_id)) % 6
+      when 0 then 'Москва'
+      when 1 then 'Нью-Йорк'
+      when 2 then 'Берлин'
+      when 3 then 'Париж'
+      when 4 then 'Лондон'
+      else 'Мадрид'
+    end as city,
+    format('ул. Тестовая, д.%s, кв.%s',
+           10 + (c.customer_id % 50),
+           1 + (c.customer_id % 100)) as addressline,
+    now() - make_interval(days := ((c.customer_id % 30)::int)) as created_at,
+    ((row_number() over (order by c.customer_id)) % 3 = 0) as is_default
+  from public.customers c
+  order by c.customer_id
+  limit 30
+)
+insert into public.customer_addresses
+  (customer_id, is_default, receiver_name, country_code, city, addressline, created_at)
+select
+  customer_id, is_default, receiver_name, country_code, city, addressline, created_at
+from src;
+
