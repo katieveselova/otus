@@ -249,4 +249,39 @@ VALUES
   ('W009', 'Склад Уфа-Центральный',     '{"street":"проспект Октября, 70","city":"Уфа","region":"Республика Башкортостан","postal_code":"450077","country":"RU"}', true),
   ('W010', 'Склад Красноярск-Север',    '{"street":"ул. Карла Маркса, 95","city":"Красноярск","region":"Красноярский край","postal_code":"660049","country":"RU"}', false);
 
+WITH wh AS (
+  SELECT warehouse_id
+  FROM warehouses
+  ORDER BY warehouse_id
+  LIMIT 10
+),
+v AS (
+  SELECT variant_id
+  FROM product_variants
+  ORDER BY variant_id
+  LIMIT 59
+),
+matrix AS (
+  SELECT wh.warehouse_id, v.variant_id
+  FROM wh CROSS JOIN v
+),
+seed AS (
+  SELECT
+    m.warehouse_id,
+    m.variant_id,
+    (10 + floor(random() * 191))::int AS qty,
+    now() - (random() * interval '30 days') AS updated_at
+  FROM matrix m
+)
+INSERT INTO inventory (warehouse_id, variant_id, qty, reserved_qty, updated_at)
+SELECT
+  s.warehouse_id,
+  s.variant_id,
+  s.qty,
+  -- Резерв не больше остатка
+  floor(random() * s.qty)::int AS reserved_qty,
+  s.updated_at
+FROM seed s;
+
+
 
