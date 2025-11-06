@@ -377,4 +377,15 @@ SELECT
   round((i * 100) * 0.2, 2)                                                            AS tax
 FROM generate_series(1, 30) AS gs(i);
 
-
+INSERT INTO public.payments (
+  order_id, amount, payment_method, status, created_at
+)
+SELECT
+  i AS order_id,                                               
+  900 + (i % 7) * 100 + i * 5 AS amount,                     
+  (ARRAY['card','sbp','cash','apple_pay','google_pay','bank_transfer'])
+    [((i - 1) % 6) + 1] AS payment_method,                
+  (ARRAY['pending','authorized','captured','failed','refunded','canceled'])
+    [((i - 1) % 6) + 1] AS status,                
+  now() - make_interval(days := (i % 10), hours := i) AS created_at  
+FROM generate_series(1, 30) AS gs(i);
