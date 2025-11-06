@@ -1,3 +1,5 @@
+
+
 create table customers (
   customer_id    bigint generated always as identity primary key,
   email          text not null unique,
@@ -28,7 +30,7 @@ create table customer_addresses (
 
 
 
--- Индексы и ограничение: по одному дефолтному адресу на клиента
+
 create index if not exists ix_customer_addresses_customer_id on public.customer_addresses(customer_id);
 
 create unique index if not exists uq_customer_default_address
@@ -46,7 +48,7 @@ create table if not exists public.categories (
   constraint chk_categories_slug_format check (slug ~ '^[a-z0-9]+(?:-[a-z0-9]+)*$')
 );
 
--- Уникальные индексы
+
 create unique index if not exists ux_categories_slug on public.categories (slug);
 create unique index if not exists ux_categories_name on public.categories (name);
 
@@ -73,8 +75,7 @@ CREATE TABLE IF NOT EXISTS product_categories (
   PRIMARY KEY (product_id, category_id)
 );
 
--- Индекс на category_id (ускорит выборки по категории)
-CREATE INDEX IF NOT EXISTS idx_prod;
+
 
   CREATE TABLE IF NOT EXISTS product_variants (
   variant_id    BIGSERIAL PRIMARY KEY,
@@ -123,7 +124,7 @@ CREATE TABLE carts (
   source      TEXT   NOT NULL CHECK (source IN ('web', 'app'))
 );
 
--- 2) Индексы
+
 CREATE INDEX IF NOT EXISTS idx_carts_customer_id ON public.carts(customer_id);
 CREATE INDEX IF NOT EXISTS idx_carts_status      ON public.carts(status);
 CREATE INDEX IF NOT EXISTS idx_carts_expires_at  ON public.carts(expires_at);
@@ -140,25 +141,6 @@ CREATE TABLE cart_items (
     FOREIGN KEY (variant_id) REFERENCES product_variants(variant_id)
 );
 
-CREATE TABLE public.orders (
-  order_id       BIGSERIAL PRIMARY KEY,
-  order_number   TEXT      NOT NULL UNIQUE,
-  customer_id    BIGINT    NOT NULL REFERENCES public.customers(customer_id),
-  order_status   TEXT      NOT NULL,
-  payments_status TEXT     NOT NULL,
-  placed_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
-  currency       CHAR(3)   NOT NULL,
-  subtotal       MONEY     NOT NULL,
-  discount       MONEY     NOT NULL DEFAULT 0,
-  shipping       MONEY     NOT NULL DEFAULT 0,
-  tax            MONEY     NOT NULL DEFAULT 0
-);
-
-
-CREATE INDEX IF NOT EXISTS idx_orders_customer_id     ON public.orders(customer_id);
-CREATE INDEX IF NOT EXISTS idx_orders_order_status    ON public.orders(order_status);
-CREATE INDEX IF NOT EXISTS idx_orders_payments_status ON public.orders(payments_status);
-CREATE INDEX IF NOT EXISTS idx_orders_placed_at       ON public.orders(placed_at);
 
 CREATE TABLE public.orders (
   order_id        BIGSERIAL PRIMARY KEY,
