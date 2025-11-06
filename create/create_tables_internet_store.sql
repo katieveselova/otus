@@ -159,3 +159,17 @@ CREATE INDEX IF NOT EXISTS idx_orders_customer_id     ON public.orders(customer_
 CREATE INDEX IF NOT EXISTS idx_orders_order_status    ON public.orders(order_status);
 CREATE INDEX IF NOT EXISTS idx_orders_payments_status ON public.orders(payments_status);
 CREATE INDEX IF NOT EXISTS idx_orders_placed_at       ON public.orders(placed_at);
+
+CREATE TABLE IF NOT EXISTS public.orders (
+  order_id        BIGSERIAL PRIMARY KEY,
+  order_number    TEXT,
+  customer_id     BIGINT REFERENCES public.customers(customer_id),
+  order_status    TEXT,
+  payments_status TEXT,
+  placed_at       TIMESTAMPTZ,
+  currency        CHAR(3),
+  subtotal        NUMERIC,
+  discount        NUMERIC,
+  shipping        NUMERIC,
+  tax             NUMERIC
+);
