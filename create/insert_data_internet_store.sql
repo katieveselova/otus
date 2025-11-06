@@ -360,3 +360,33 @@ SELECT
     [((i - 1) % 6) + 1] AS status,                
   now() - make_interval(days := (i % 10), hours := i) AS created_at  
 FROM generate_series(1, 30) AS gs(i);
+
+
+
+WITH o AS (
+  SELECT order_id,
+         ROW_NUMBER() OVER (ORDER BY order_id) AS rn
+  FROM orders
+  ORDER BY order_id
+  LIMIT 30
+),
+s AS (
+  SELECT
+    o.order_id,
+    ((o.rn * 7)  % 50) + 1 AS product_id,  -- равномерное "перемешивание" 1..50
+    ((o.rn * 13) % 50) + 1 AS variant_id,  -- независимое "перемешивание" 1..50
+    (ARRAY[299, 499, 799, 1299, 1999, 2499, 3499, 4999, 7499, 9999])[(o.rn % 10) + 1] AS unit_price,
+    ((o.rn % 5) + 1) AS quantity,
+    (ARRAY[0, 5, 10, 12, 18, 20])[(o.rn % 6) + 1]::NUMERIC(5,2) AS tax_rate
+  FROM o
+)
+INSERT INTO order_items (order_id, product_id, variant_id, unit_price, quantity, total, tax_rate)
+SELECT
+  s.order_id,
+  s.product_id,
+  s.variant_id,
+  s.unit_price,
+  s.quantity,
+  (s.unit_price::NUMERIC * s.quantity),  -- total = unit_price * quantity
+  s.tax_rate
+FROM s;
