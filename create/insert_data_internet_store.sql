@@ -332,5 +332,33 @@ FROM carts30 c
 JOIN variants30 v USING (rn);
 
 
+INSERT INTO public.orders (
+  order_number, customer_id, order_status, payments_status,
+  placed_at, currency, subtotal, discount, shipping, tax
+)
+SELECT
+  'ORD-' || to_char(i, 'FM00000')                AS order_number,
+  i::bigint                                      AS customer_id,
+  CASE i % 5
+    WHEN 1 THEN 'new'
+    WHEN 2 THEN 'processing'
+    WHEN 3 THEN 'shipped'
+    WHEN 4 THEN 'delivered'
+    ELSE 'canceled'
+  END                                            AS order_status,
+  CASE i % 4
+    WHEN 1 THEN 'pending'
+    WHEN 2 THEN 'paid'
+    WHEN 3 THEN 'failed'
+    ELSE 'refunded'
+  END                                            AS payments_status,
+  now() - (i || ' days')::interval               AS placed_at,
+  'USD'                                          AS currency,
+  (i * 10)::money                                AS subtotal,
+  0::money                                       AS discount,
+  5::money                                       AS shipping,
+  ((i * 10)::numeric * 0.10)::money              AS tax
+FROM generate_series(1, 30) AS gs(i);
+
 
 
