@@ -166,3 +166,25 @@ CREATE TABLE
   status         TEXT NOT NULL,  -- pending, authorized, captured, failed, refunded, canceled
   created_at     TIMESTAMPTZ NOT NULL
 );
+
+
+CREATE TABLE order_items (
+  item_id     BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  order_id    BIGINT NOT NULL,
+  product_id  BIGINT NOT NULL,
+  variant_id  BIGINT NOT NULL,
+  unit_price  INTEGER NOT NULL,          -- цена за единицу (в целых, например в копейках/центах)
+  quantity    INTEGER NOT NULL,          -- количество
+  total       NUMERIC NOT NULL,          -- сумма позиции = unit_price * quantity
+  tax_rate    NUMERIC(5,2) NOT NULL,     -- ставка налога, %
+  CONSTRAINT order_items_quantity_pos CHECK (quantity > 0),
+  CONSTRAINT order_items_price_pos CHECK (unit_price >= 0),
+  CONSTRAINT order_items_tax_between CHECK (tax_rate >= 0 AND tax_rate <= 100),
+  CONSTRAINT order_items_total_pos CHECK (total >= 0),
+  CONSTRAINT fk_order_items_order
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+  CONSTRAINT fk_order_items_product
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+  CONSTRAINT fk_order_items_variant
+    FOREIGN KEY (variant_id) REFERENCES product_variants(variant_id)
+);
