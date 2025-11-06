@@ -306,4 +306,31 @@ SELECT
 FROM src;
 
 
+WITH carts30 AS (
+  SELECT cart_id, row_number() OVER (ORDER BY cart_id) AS rn
+  FROM public.carts
+  ORDER BY cart_id
+  LIMIT 30
+),
+variants30 AS (
+  SELECT variant_id, row_number() OVER (ORDER BY variant_id) AS rn
+  FROM public.product_variants
+  ORDER BY variant_id
+  LIMIT 30
+)
+INSERT INTO public.cart_items (cart_id, variant_id, qty, added_at)
+SELECT
+  c.cart_id,
+  v.variant_id,
+  (1 + floor(random()*5))::int AS qty,  -- 1..5
+  now() - make_interval(
+    days  => (floor(random()*10))::int,
+    hours => (floor(random()*23))::int,
+    mins  => (floor(random()*59))::int
+  ) AS added_at
+FROM carts30 c
+JOIN variants30 v USING (rn);
+
+
+
 
