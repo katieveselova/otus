@@ -113,7 +113,7 @@ CREATE TABLE inventory (
   CONSTRAINT reserved_lte_qty CHECK (reserved_qty <= qty)
 );
 
-CREATE TABLE IF NOT EXISTS carts (
+CREATE TABLE carts (
   cart_id     BIGSERIAL PRIMARY KEY,
   customer_id BIGINT NOT NULL REFERENCES public.customers(customer_id),
   status      TEXT   NOT NULL CHECK (status IN ('active', 'converted', 'abandoned', 'expired')),
@@ -128,7 +128,7 @@ CREATE INDEX IF NOT EXISTS idx_carts_customer_id ON public.carts(customer_id);
 CREATE INDEX IF NOT EXISTS idx_carts_status      ON public.carts(status);
 CREATE INDEX IF NOT EXISTS idx_carts_expires_at  ON public.carts(expires_at);
 
-CREATE TABLE IF NOT EXISTS cart_items (
+CREATE TABLE cart_items (
   cart_id    BIGSERIAL    NOT NULL,
   variant_id BIGINT  NOT NULL,
   qty        INTEGER NOT NULL CHECK (qty > 0),
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS cart_items (
     FOREIGN KEY (variant_id) REFERENCES product_variants(variant_id)
 );
 
-CREATE TABLE IF NOT EXISTS public.orders (
+CREATE TABLE public.orders (
   order_id       BIGSERIAL PRIMARY KEY,
   order_number   TEXT      NOT NULL UNIQUE,
   customer_id    BIGINT    NOT NULL REFERENCES public.customers(customer_id),
@@ -160,7 +160,7 @@ CREATE INDEX IF NOT EXISTS idx_orders_order_status    ON public.orders(order_sta
 CREATE INDEX IF NOT EXISTS idx_orders_payments_status ON public.orders(payments_status);
 CREATE INDEX IF NOT EXISTS idx_orders_placed_at       ON public.orders(placed_at);
 
-CREATE TABLE IF NOT EXISTS public.orders (
+CREATE TABLE public.orders (
   order_id        BIGSERIAL PRIMARY KEY,
   order_number    TEXT,
   customer_id     BIGINT REFERENCES public.customers(customer_id),
@@ -172,4 +172,15 @@ CREATE TABLE IF NOT EXISTS public.orders (
   discount        NUMERIC,
   shipping        NUMERIC,
   tax             NUMERIC
+);
+
+
+CREATE TABLE 
+  public.payments (
+  payment_id     BIGSERIAL PRIMARY KEY,
+  order_id       BIGINT NOT NULL REFERENCES public.orders(order_id),
+  amount         INTEGER NOT NULL,
+  payment_method TEXT NOT NULL,  -- card, sbp, cash, apple_pay, google_pay, bank_transfer
+  status         TEXT NOT NULL,  -- pending, authorized, captured, failed, refunded, canceled
+  created_at     TIMESTAMPTZ NOT NULL
 );
