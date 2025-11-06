@@ -1,4 +1,4 @@
-1. Склады и остатки. Стичает остатки по складам: общий, в резерве, доступный
+--1. Склады и остатки. Считает остатки по складам: общий, в резерве, доступный
 
 SELECT
   w.warehouse_id,
@@ -11,6 +11,94 @@ LEFT JOIN public.inventory i
   ON i.warehouse_id = w.warehouse_id
 GROUP BY w.warehouse_id, w.code
 ORDER BY qty_available DESC NULLS LAST;
+
+
+--2. Топ 10 категорий по выручке и средний чек категории
+
+WITH paid_orders AS (
+  SELECT o.order_id
+  FROM public.orders o
+  WHERE o.placed_at >= now() - interval '12 months'
+    AND (o.payments_status = 'paid' OR o.order_status IN ('completed','shipped'))
+)
+SELECT c.category_id,
+       c.name,
+       SUM(oi.total)                                 AS summm,
+       COUNT(DISTINCT oi.order_id)                   AS amount,
+       (SUM(oi.total) / NULLIF(COUNT(DISTINCT oi.order_id), 0)) AS avg_order_value
+FROM paid_orders po
+JOIN order_items oi           ON oi.order_id = po.order_id
+JOIN product_categories pc    ON pc.product_id = oi.product_id
+JOIN categories c             ON c.category_id = pc.category_id
+GROUP BY c.category_id, c.name
+ORDER BY summm DESC
+LIMIT 10;
+
+
+--3. выручка, средний чек и количество заказов по месяцам ( последние 12 месяцев)
+
+WITH paid_orders AS (
+  SELECT o.order_id,
+         date_trunc('month', o.placed_at) AS month
+  FROM public.orders o
+  WHERE o.placed_at >= now() - interval '12 months'
+    AND (o.payments_status = 'paid' OR o.order_status IN ('completed','shipped'))
+),
+agg AS (
+  SELECT po.month,
+         COUNT(DISTINCT po.order_id)                          AS orders_cnt,
+         SUM(oi.total)                                        AS summm,
+         SUM(oi.quantity)                                     AS items_qty
+  FROM paid_orders po
+  JOIN order_items oi ON oi.order_id = po.order_id
+  GROUP BY po.month
+)
+SELECT month::date                          AS month,
+       orders_cnt,
+       summm,
+       (summm / NULLIF(orders_cnt, 0))    AS avg_order_value,
+       items_qty
+FROM agg
+ORDER BY month;
+
+-- 4. топ 20 клиентов по самой большой сумме ltv. показатель, отражающий пожизненную ценность клиента,
+--то есть суммарную прибыль или выручку, которую компания получает от одного клиента за всё время взаимодействия с ним
+
+WITH paid_orders AS (
+  SELECT
+    o.customer_id,
+    MAX(o.placed_at) AS last_order_at,
+    SUM(COALESCE(o.subtotal,0) - COALESCE(o.discount,0) + COALESCE(o.shipping,0) + COALESCE(o.tax,0)) AS ltv
+  FROM public.orders o
+  WHERE (o.payments_status = 'paid' OR o.order_status IN ('paid','completed','shipped'))
+  GROUP BY o.customer_id
+)
+SELECT
+  c.customer_id,
+  COALESCE(c.email, c.phone) AS contact,
+  c.first_name,
+  c.last_name,
+  p.ltv,
+  p.last_order_at
+FROM paid_orders p
+JOIN customers c ON c.customer_id = p.customer_id
+ORDER BY p.ltv DESC
+LIMIT 20;
+
+--5. Прирост новых клиетов по неделям + скользящее среднее 4 недели
+
+WITH weekly AS (
+  SELECT date_trunc('week', c.registred_at)::date AS week, COUNT(*) AS new_customers
+  FROM public.customers c
+  GROUP BY 1
+)
+SELECT
+  week,
+  new_customers,
+  ROUND(AVG(new_customers) OVER (ORDER BY week ROWS BETWEEN 3 PRECEDING AND CURRENT ROW), 2) AS ma4
+FROM weekly
+ORDER BY week;
+
 
 
 
