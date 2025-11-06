@@ -5,4 +5,17 @@
 Гибкая расширяемость через JSONB‑атрибуты товара.
 Продуманная стратегия индексов и ограничений целостности.
 Рекомендации по транзакциям, резервированию остатков и TTL корзины.
-Ссылка на ER диаграмму бд https://drive.google.com/file/d/1vApf61J7_IjRontGyQLQas0k4moxFoX1/view?usp=sharing
+Ссылка на ER диаграмму бд:
+https://drive.google.com/file/d/1vApf61J7_IjRontGyQLQas0k4moxFoX1/view?usp=sharing
+
+Индексы: 
+1 Индексы на внешних ключах
+PostgreSQL не создаёт индексы на FK автоматически.
+Для этого создаются B‑Tree индексы на всех FK. Эффект: ускорение JOIN и поисковых операций на больших таблицах.
+
+2 Уникальные индексы и технические ключи
+products(slug) UNIQUE, categories(slug) UNIQUE, warehouses(code) UNIQUE, orders(order_number) UNIQUE.
+Эффект: защита от дубликатов, быстрый поиск.
+
+
+
