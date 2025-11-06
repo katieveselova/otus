@@ -1,1 +1,80 @@
-.
+--1. Количество товаров в категориях
+Агрегирует, сколько товаров всего и сколько активных в каждой категории, плюс временные метки первого/последнего товара
+
+CREATE OR REPLACE VIEW public.v_category_product_counts AS
+SELECT
+  c.category_id,
+  c.name,
+  c.slug,
+  c.is_active,
+  COUNT(pc.product_id) AS products_total,
+  COUNT(*) FILTER (WHERE p.is_active) AS products_active,
+  MIN(p.created_at) AS first_product_created_at,
+  MAX(p.updated_at) AS last_product_updated_at
+FROM public.categories c
+LEFT JOIN public.product_categories pc
+  ON pc.category_id = c.category_id
+LEFT JOIN public.products p
+  ON p.product_id = pc.product_id
+GROUP BY c.category_id, c.name, c.slug, c.is_active;
+
+
+--2. Остатки по складам, доступно к продаже, стоимость по себестоимости и потенциальная выручка по цене.
+CREATE OR REPLACE VIEW public.v_inventory_availability AS
+SELECT
+  w.warehouse_id,
+  w.code              AS warehouse_code,
+  w.name              AS warehouse_name,
+  w.is_active         AS warehouse_active,
+  inv.variant_id,
+  pv.product_id,
+  p.name              AS product_name,
+  p.brand,
+  pv.price,
+  pv.cost,
+  inv.qty,
+  inv.reserved_qty,
+  GREATEST(inv.qty - COALESCE(inv.reserved_qty, 0), 0) AS available_qty,
+  (GREATEST(inv.qty - COALESCE(inv.reserved_qty, 0), 0) * COALESCE(pv.cost, 0))::numeric AS value_at_cost,
+  (GREATEST(inv.qty - COALESCE(inv.reserved_qty, 0), 0) * COALESCE(pv.price, 0))::numeric AS potential_revenue,
+  inv.updated_at      AS inventory_updated_at
+FROM public.inventory inv
+JOIN public.warehouses w       ON w.warehouse_id = inv.warehouse_id
+LEFT JOIN public.product_variants pv ON pv.variant_id = inv.variant_id
+LEFT JOIN public.products p          ON p.product_id = pv.product_id;
+
+--3. Cводка по дням: количество заказов, покупателей, товаров, выручка, платежи и задолженность.
+
+
+CREATE OR REPLACE VIEW PUBLIC.v_orders_daily_summary AS
+SELECT
+  date_trunc('day', o.placed_at)::date AS day,
+  COUNT(*) AS orders_count,
+  COUNT(DISTINCT o.customer_id) AS customers_count,
+  COALESCE(SUM(oi.items_qty), 0) AS items_qty,
+  SUM(
+    COALESCE(o.subtotal, 0)
+    - COALESCE(o.discount, 0)
+    + COALESCE(o.shipping, 0)
+    + COALESCE(o.tax, 0)
+  ) AS gross_revenue,
+  COALESCE(SUM(p.payments_amount), 0) AS payments_received,
+  SUM(
+    COALESCE(o.subtotal, 0)
+    - COALESCE(o.discount, 0)
+    + COALESCE(o.shipping, 0)
+    + COALESCE(o.tax, 0)
+  ) - COALESCE(SUM(p.payments_amount), 0) AS outstanding
+FROM public.orders o
+LEFT JOIN (
+  SELECT order_id, SUM(quantity) AS items_qty
+  FROM public.order_items
+  GROUP BY order_id
+) oi ON oi.order_id = o.order_id
+LEFT JOIN (
+  SELECT order_id, SUM(amount) AS payments_amount
+  FROM public.payments
+  GROUP BY order_id
+) p ON p.order_id = o.order_id
+GROUP BY 1
+ORDER BY 1;
