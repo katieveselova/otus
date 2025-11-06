@@ -1,0 +1,18 @@
+
+create index if not exists idx_variants_product on product_variants(product_id);
+create index if not exists idx_prodcat_product on product_categories(product_id);
+create index if not exists idx_prodcat_category on product_categories(category_id);
+create index if not exists idx_inventory_warehouse on inventory(warehouse_id);
+create index if not exists idx_inventory_variant on inventory(variant_id);
+create index if not exists idx_cart_items_cart on cart_items(cart_id);
+create index if not exists idx_cart_items_variant on cart_items(variant_id);
+create index if not exists idx_orders_customer on orders(customer_id);
+create index if not exists idx_order_items_order on order_items(order_id);
+create index if not exists idx_order_items_variant on order_items(variant_id);
+create index if not exists idx_payments_order on payments(order_id);
+
+-- Уникальные/частичные
+create unique index if not exists ux_products_slug on products(slug);
+create unique index if not exists ux_categories_slug on categories(slug);
+create unique index if not exists ux_warehouses_code on warehouses(code);
+create unique index if not exists ux_orders_number on orders(order_number);
