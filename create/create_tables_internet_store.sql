@@ -139,3 +139,23 @@ CREATE TABLE IF NOT EXISTS cart_items (
   CONSTRAINT fk_cart_items_variant
     FOREIGN KEY (variant_id) REFERENCES product_variants(variant_id)
 );
+
+CREATE TABLE IF NOT EXISTS public.orders (
+  order_id       BIGSERIAL PRIMARY KEY,
+  order_number   TEXT      NOT NULL UNIQUE,
+  customer_id    BIGINT    NOT NULL REFERENCES public.customers(customer_id),
+  order_status   TEXT      NOT NULL,
+  payments_status TEXT     NOT NULL,
+  placed_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+  currency       CHAR(3)   NOT NULL,
+  subtotal       MONEY     NOT NULL,
+  discount       MONEY     NOT NULL DEFAULT 0,
+  shipping       MONEY     NOT NULL DEFAULT 0,
+  tax            MONEY     NOT NULL DEFAULT 0
+);
+
+
+CREATE INDEX IF NOT EXISTS idx_orders_customer_id     ON public.orders(customer_id);
+CREATE INDEX IF NOT EXISTS idx_orders_order_status    ON public.orders(order_status);
+CREATE INDEX IF NOT EXISTS idx_orders_payments_status ON public.orders(payments_status);
+CREATE INDEX IF NOT EXISTS idx_orders_placed_at       ON public.orders(placed_at);
