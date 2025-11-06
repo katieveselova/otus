@@ -361,4 +361,20 @@ SELECT
 FROM generate_series(1, 30) AS gs(i);
 
 
+INSERT INTO public.orders (
+  order_number, customer_id, order_status, payments_status,
+  placed_at,subtotal, discount, shipping, tax
+)
+SELECT
+  'ORD-' || to_char(i, 'FM00000') AS order_number,
+  i                                AS customer_id,
+  (ARRAY['new','processing','shipped','delivered','canceled'])[((i - 1) % 5) + 1]     AS order_status,
+  (ARRAY['pending','paid','failed','refunded'])[((i - 1) % 4) + 1]                     AS payments_status,
+  now() - ((i)::text || ' days')::interval                                            AS placed_at,
+  (i * 100)::numeric                                                                   AS subtotal,
+  ((i % 3) * 5)::numeric                                                               AS discount,
+  ((i % 4) * 10)::numeric                                                              AS shipping,
+  round((i * 100) * 0.2, 2)                                                            AS tax
+FROM generate_series(1, 30) AS gs(i);
+
 
