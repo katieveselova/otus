@@ -128,3 +128,14 @@ CREATE INDEX IF NOT EXISTS idx_carts_customer_id ON public.carts(customer_id);
 CREATE INDEX IF NOT EXISTS idx_carts_status      ON public.carts(status);
 CREATE INDEX IF NOT EXISTS idx_carts_expires_at  ON public.carts(expires_at);
 
+CREATE TABLE IF NOT EXISTS cart_items (
+  cart_id    BIGSERIAL    NOT NULL,
+  variant_id BIGINT  NOT NULL,
+  qty        INTEGER NOT NULL CHECK (qty > 0),
+  added_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT pk_cart_items PRIMARY KEY (cart_id, variant_id),
+  CONSTRAINT fk_cart_items_cart
+    FOREIGN KEY (cart_id) REFERENCES carts(cart_id) ON DELETE CASCADE,
+  CONSTRAINT fk_cart_items_variant
+    FOREIGN KEY (variant_id) REFERENCES product_variants(variant_id)
+);
