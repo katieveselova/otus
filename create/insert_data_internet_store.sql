@@ -283,5 +283,27 @@ SELECT
   s.updated_at
 FROM seed s;
 
+WITH src AS (
+  SELECT
+    i,
+
+    (now()
+      - make_interval(days => (i % 20))
+      - make_interval(hours => (random()*23)::int, mins => (random()*59)::int)
+    ) AS created_ts,
+    (ARRAY['active','converted','abandoned','expired'])[(floor(random()*4)+1)::int] AS st,
+    (ARRAY['web','app'])[(floor(random()*2)+1)::int] AS src
+  FROM generate_series(1, 30) AS i
+)
+INSERT INTO public.carts (customer_id, status, createdat, updated_at, expires_at, source)
+SELECT
+  i::bigint AS customer_id,                 
+  st         AS status,
+  created_ts AS createdat,
+  created_ts + make_interval(mins => (random()*300)::int) AS updated_at, 
+  created_ts + interval '7 days'               AS expires_at,           
+  src        AS source
+FROM src;
+
 
 
