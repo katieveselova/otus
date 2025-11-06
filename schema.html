@@ -1,0 +1,840 @@
+
+
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Сustomers<br><br>Данные о клиентах</th>
+  </tr></thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax">Name</th>
+    <th class="tg-0lax">Definition</th>
+    <th class="tg-0lax">Description</th>
+  </tr></thead>
+<tbody>
+  <tr>
+      <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">customer_id</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">bigint</span></td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Уникальный идентификатор клиента.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">email</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky">эл почта клиента</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">phone</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky">тел. номер клиента</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">first_name</span></td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky">имя клиента</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">last_name</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky">фамилия клиента</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">middle_name</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky">отчество клиента</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">registred_at</span></td>
+    <td class="tg-0pky">timestamptz</td>
+    <td class="tg-0pky">дата и время регистрации</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">marketingopt_in</td>
+    <td class="tg-0pky">boolean</td>
+    <td class="tg-0pky">согласие на маркетинговые рассылки</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">status</td>
+    <td class="tg-0pky">smallint</td>
+    <td class="tg-0pky">статус </td>
+  </tr>
+</tbody></table>
+
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Products<br><br>Данные о товарах</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">product_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Уникальный идентификатор товара</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">name</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Название товара, отображается на витрине и в поиске.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">slug</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">ЧПУ-идентификатор для URL</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">brand</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Бренд/производитель товара.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">description</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky">Текстовое описание товара</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">attributes</td>
+    <td class="tg-0pky">jsonb</td>
+    <td class="tg-0pky">Произвольные атрибуты товара (цвет, размер, материал и т. п.) в формате ключ–значение;</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">is_active</td>
+    <td class="tg-0pky">boolean</td>
+    <td class="tg-0pky">Признак опубликованности/доступности товара в каталоге</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">created_at</td>
+    <td class="tg-0pky">timestamptz</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Время создания записи</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">updated_at</td>
+    <td class="tg-0pky">timestamptz</td>
+    <td class="tg-0pky">Время последнего обновления записи</td>
+  </tr>
+</tbody></table>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Product_variants<br><br>Данные о вариантах товара</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">variant_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Уникальный идентификатор варианта.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">product_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Ссылка на родительский товар.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">price</td>
+    <td class="tg-0pky">numeric</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Цена продажи в валюте магазина.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">cost</td>
+    <td class="tg-0pky">numeric</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Себестоимость</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">weight_grams</td>
+    <td class="tg-0pky">integer</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Вес в граммах</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">is_active</td>
+    <td class="tg-0pky">boolean</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Признак доступности/публикации</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">created_at</td>
+    <td class="tg-0pky">timestamptz</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Дата и время создания записи.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">updated_at</td>
+    <td class="tg-0pky">timestamptz</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Дата и время последнего изменения.</span></td>
+  </tr>
+</tbody></table>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Warehouses<br><br>Данные о местах отгрузки и хранения товара</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">warehouse_id</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">bigint</span></td>
+    <td class="tg-0pky">Уникальный идентификатор склада.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">code</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Внутренний код склада</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">name</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky">Название склада</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">address</td>
+    <td class="tg-0pky">jsonb</td>
+    <td class="tg-0pky">Адрес и контакты</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">is_active</td>
+    <td class="tg-0pky">boolean</td>
+    <td class="tg-0pky">Признак активности склада.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">created_at</td>
+    <td class="tg-0pky">timestamps</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Дата и время создания записи.</span></td>
+  </tr>
+</tbody></table>
+
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Carts<br><br>Данные о корзинах товаров</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">cart_id</td>
+    <td class="tg-0pky">biting</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Первичный ключ корзины.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">customer_id</td>
+    <td class="tg-0pky">bigserial</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Клиент — владелец корзины.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">status</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Статус корзины active / converted / abandoned / expired.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">createdate</td>
+    <td class="tg-0pky">timestamptz</td>
+    <td class="tg-0pky">Дата и время создания корзины.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">expires_at</td>
+    <td class="tg-0pky">timestamptz</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Дата и время последнего изменения</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">expires_at</td>
+    <td class="tg-0pky">timestamptz</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Время истечения срока жизни корзины (TTL).</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">source</td>
+    <td class="tg-0lax">text</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Канал создания: web / app.</span></td>
+  </tr>
+</tbody></table>
+
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Orders<br><br>Данные о заказах</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">order_id</td>
+    <td class="tg-0pky">bigserial</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Уникальный идентификатор заказа.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">order_number</td>
+    <td class="tg-0pky">text<br></td>
+    <td class="tg-0pky">Внешний номер заказа</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">customer_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky">Ссылка на покупателя.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">order_status</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Статус обработки заказа.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">payments_status</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Статус оплаты</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">placed_at</td>
+    <td class="tg-0pky">timestanptz</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Дата и время оформления.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">subtotal</td>
+    <td class="tg-0lax">numeric</td>
+    <td class="tg-0lax">Сумма товаров до скидок и налогов.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">discount</td>
+    <td class="tg-0lax">numeric</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Сумма скидок.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">shipping</td>
+    <td class="tg-0lax">numeric</td>
+    <td class="tg-0lax">Стоимость доставки.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">tax</td>
+    <td class="tg-0lax">numeric</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Сумма налогов.</span></td>
+  </tr>
+</tbody></table>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Order_items<br><br>Параметры заказа</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">item_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky">Уникальный идентификатор позиции.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">order_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky">Ссылка на заказ.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">product_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Товар в позиции.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">variant_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Вариант товара.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">product_name</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Название товара на момент покупки.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">unitprice</td>
+    <td class="tg-0lax">numeric</td>
+    <td class="tg-0lax">Цена за единицу.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">qty</td>
+    <td class="tg-0lax">integer</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Количество.</span><br></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">total</td>
+    <td class="tg-0lax">numeric</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Сумма по позиции.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">tax_rate</td>
+    <td class="tg-0lax">numeric(5,2)</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Ставка налога, %.</span></td>
+  </tr>
+</tbody></table>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Payments<br><br>Платежи</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">payment_id</td>
+    <td class="tg-0pky">bigserial</td>
+    <td class="tg-0pky">Payments</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">order_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Ссылка на связанный заказ.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">amount</td>
+    <td class="tg-0pky">integer</td>
+    <td class="tg-0pky">Сумма платежа.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">payment_method</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky">Способ оплаты.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">status</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Статус платежа.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">created_at</td>
+    <td class="tg-0lax">timestanpz</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Дата и время создания платежа.</span></td>
+
+  </tr>
+</tbody></table>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Product_categories<br><br>Связка для таблиц Products и Сategories</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">product_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky">ссылка на продукт</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">category_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky">ссылка на категорию</td>
+  </tr>
+</tbody>
+</table>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Inventory<br><br>остатки по складам</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">warehouse_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky">идентификатор склада</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">variant_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky">идентификатор варианта товара</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">qty</td>
+    <td class="tg-0lax">integer</td>
+    <td class="tg-0lax">количество</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">reserved_qty</td>
+    <td class="tg-0lax">integer</td>
+    <td class="tg-0lax">зарезервированное количество</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">updated_at</td>
+    <td class="tg-0lax">timestamptz</td>
+    <td class="tg-0lax">свободное_количество</td>
+  </tr>
+  
+  <style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Cart_items<br><br>позиции корзины</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">cart_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky">идентификатор корзины</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">variant_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky">идентификатор варианта продукта</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">qty</td>
+    <td class="tg-0lax">integer</td>
+    <td class="tg-0lax">количество</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">added_at</td>
+    <td class="tg-0lax">timestamptz</td>
+    <td class="tg-0lax">дата и время добавления</td>
+  </tr>
+</tbody></table>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Customer_addresses<br><br>Адреса клиента</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">address_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Уникальный идентификатор адреса.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">customer_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Ссылка на клиента.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">is_default</td>
+    <td class="tg-0lax">boolean</td>
+    <td class="tg-0lax">Признак адреса по умолчанию.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">receiver_name</td>
+    <td class="tg-0lax">text</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Имя/ФИО получателя.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">country_code</td>
+    <td class="tg-0lax">char(2)</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Код страны</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">city</td>
+    <td class="tg-0lax">text</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Город.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">addressline</td>
+    <td class="tg-0lax">text</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Улица, дом, квартира (строка адреса).</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">created_at</td>
+    <td class="tg-0lax">timestamptz</td>
+    <td class="tg-0lax">Дата и время создания записи.</td>
+  </tr>
+</tbody></table>
+
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-0lax"></th>
+    <th class="tg-0lax" colspan="3">Categories<br><br><span style="font-weight:normal;font-style:normal">справочник категорий товаров</span></th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Name</td>
+    <td class="tg-0lax">Definition</td>
+    <td class="tg-0lax">Description</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">PK</td>
+    <td class="tg-0pky">category_id</td>
+    <td class="tg-0pky">bigint</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Уникальный идентификатор категории.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0pky">name</td>
+    <td class="tg-0pky">text</td>
+    <td class="tg-0pky"><span style="font-weight:normal;font-style:normal">Название категории.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">slug</td>
+    <td class="tg-0lax">text</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">идентификатор для URL.</span></td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">is_active<br></td>
+    <td class="tg-0lax">boolean</td>
+    <td class="tg-0lax">Признак активности категории.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">created_at</td>
+    <td class="tg-0lax">timestamptz</td>
+    <td class="tg-0lax">Дата и время создания.</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax"></td>
+    <td class="tg-0lax">updated_at<br></td>
+    <td class="tg-0lax">timestamptz</td>
+    <td class="tg-0lax"><span style="font-weight:normal;font-style:normal">Дата и время обновления.</span></td>
+  </tr>
+</tbody></table>
