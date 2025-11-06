@@ -1,0 +1,52 @@
+--1) Категории: Топ‑10 по активным товарам за всё время
+
+WITH params AS (
+  SELECT
+    true::boolean AS only_active_categories,
+    10::int       AS top_n
+)
+SELECT
+  cpc.category_id,
+  cpc.name AS category_name,
+  cpc.products_total,
+  cpc.products_active,
+  cpc.first_product_created_at,
+  cpc.last_product_updated_at
+FROM public.v_category_product_counts cpc
+JOIN params p ON true
+WHERE (NOT p.only_active_categories OR cpc.is_active)
+ORDER BY cpc.products_active DESC NULLS LAST
+LIMIT (SELECT top_n FROM params);
+
+
+
+-- 2) Категории без товаров (для чистки каталога)
+SELECT
+  category_id,
+  name AS category_name,
+  is_active
+FROM public.v_category_product_counts
+WHERE COALESCE(products_total, 0) = 0
+ORDER BY is_active DESC, name;
+
+
+--3 Хранимая функция, возвращающая отчёт за период:
+CREATE OR REPLACE FUNCTION public.rpt_sales_daily(date_from date, date_to date)
+RETURNS TABLE(
+  day date,
+  orders_count int,
+  customers_count int,
+  items_qty bigint,
+  gross_revenue numeric,
+  payments_received numeric,
+  outstanding numeric
+) LANGUAGE sql AS
+$$
+  SELECT
+    day, orders_count, customers_count, items_qty,
+    gross_revenue, payments_received, outstanding
+  FROM public.v_orders_daily_summary
+  WHERE day BETWEEN date_from AND date_to
+  ORDER BY day;
+$$;
+
