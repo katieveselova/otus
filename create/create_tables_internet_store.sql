@@ -25,6 +25,9 @@ create table customer_addresses (
   constraint chk_country_code_iso2_upper check (country_code ~ '^[A-Z]{2}$')
 );
 
+
+
+
 -- Индексы и ограничение: по одному дефолтному адресу на клиента
 create index if not exists ix_customer_addresses_customer_id on public.customer_addresses(customer_id);
 
@@ -109,3 +112,19 @@ CREATE TABLE inventory (
   CONSTRAINT reserved_nonneg CHECK (reserved_qty >= 0),
   CONSTRAINT reserved_lte_qty CHECK (reserved_qty <= qty)
 );
+
+CREATE TABLE IF NOT EXISTS carts (
+  cart_id     BIGSERIAL PRIMARY KEY,
+  customer_id BIGINT NOT NULL REFERENCES public.customers(customer_id),
+  status      TEXT   NOT NULL CHECK (status IN ('active', 'converted', 'abandoned', 'expired')),
+  createdat   TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  expires_at  TIMESTAMPTZ NOT NULL,
+  source      TEXT   NOT NULL CHECK (source IN ('web', 'app'))
+);
+
+-- 2) Индексы
+CREATE INDEX IF NOT EXISTS idx_carts_customer_id ON public.carts(customer_id);
+CREATE INDEX IF NOT EXISTS idx_carts_status      ON public.carts(status);
+CREATE INDEX IF NOT EXISTS idx_carts_expires_at  ON public.carts(expires_at);
+
